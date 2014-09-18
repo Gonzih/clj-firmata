@@ -1,4 +1,4 @@
-(ns firmata.stream.spi)
+(ns firmata.stream.core)
 
 
 (defprotocol ByteReader

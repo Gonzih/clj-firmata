@@ -1,5 +1,5 @@
 (ns firmata.util
-  (:require [firmata.stream.spi :refer [read!]]
+  (:require [firmata.stream.core :refer [read!]]
             #+clj 
             [serial.core :refer [port-ids]]
             #+cljs

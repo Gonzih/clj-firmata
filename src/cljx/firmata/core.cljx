@@ -1,7 +1,7 @@
 (ns firmata.core
   (:require [firmata.messages :as m]
             [firmata.stream :as st]
-            [firmata.stream.spi :as spi :refer [read!]]
+            [firmata.stream.core :as sc :refer [read!]]
             [firmata.sysex :refer [read-sysex-event]]
             [firmata.util :as util :refer [lsb msb]]
 
@@ -186,7 +186,7 @@
    [this]
    (a/close! write-ch)
    (a/close! read-ch)
-   (spi/close! port)
+   (sc/close! port)
    nil)
 
   (reset-board!
@@ -294,7 +294,7 @@
 
     (go (loop []
           (when-let [data (<! write-ch)]
-            (spi/write port data)
+            (sc/write port data)
             (recur))))
 
     (->Board port board-state read-ch write-ch mult-ch pub-ch publisher create-channel)))
@@ -313,10 +313,10 @@
         create-channel #(chan (a/sliding-buffer event-buffer-size))
         read-ch (create-channel)
 
-        port (spi/open! stream)
+        port (sc/open! stream)
         result-ch (chan 1)]
 
-    (spi/listen port (firmata-handler {:state board-state 
+    (sc/listen port (firmata-handler {:state board-state 
                                       :channel read-ch 
                                       :from-raw-digital from-raw-digital}))
 

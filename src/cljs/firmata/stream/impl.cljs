@@ -1,7 +1,7 @@
 (ns firmata.stream.impl
   (:require [cljs.nodejs :as nodejs]
             [cljs.core.async    :as a :refer  [<! timeout]]
-            [firmata.stream.spi :refer [FirmataStream ByteReader]]
+            [firmata.stream.core :refer [FirmataStream ByteReader]]
             [firmata.messages :refer [SYSEX_START SYSEX_END PROTOCOL_VERSION
                                       is-digital? is-analog?]])
   (:require-macros [cljs.core.async.macros :refer [go]]))

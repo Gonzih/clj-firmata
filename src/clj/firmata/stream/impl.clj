@@ -1,5 +1,5 @@
 (ns firmata.stream.impl
-  (:require [firmata.stream.spi :refer [FirmataStream ByteReader]]
+  (:require [firmata.stream.core :refer [FirmataStream ByteReader]]
             [serial.core :as serial]
             [clojure.core.async :as a :refer [go <! timeout]])
   (:import [java.net InetSocketAddress Socket]
