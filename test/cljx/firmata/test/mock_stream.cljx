@@ -1,5 +1,5 @@
 (ns firmata.test.mock-stream
-  (:require [firmata.stream.core :refer [FirmataStream open! close! write listen]])
+  (:require [firmata.stream.core :refer [ByteReader FirmataStream open! close! write listen]])
   #+clj 
   (:import [java.io ByteArrayInputStream]
            [java.nio ByteBuffer]))
@@ -30,9 +30,11 @@
 #+clj 
 (defn create-byte-stream
   [& more]
-  (let [buffer (ByteBuffer/allocate 256)]
-    (reduce (fn [^ByteBuffer b ^bytes value] (.put b (to-bytes value))) buffer more)
-    (ByteArrayInputStream. (.array buffer))))
+  (let [buffer (ByteBuffer/allocate 256)
+        _ (reduce (fn [^ByteBuffer b ^bytes value] (.put b (to-bytes value))) buffer more)
+        in (ByteArrayInputStream. (.array buffer))]
+    (reify ByteReader
+      (read! [_] (.read in)))))
 
 #+cljs
 (defn create-byte-stream

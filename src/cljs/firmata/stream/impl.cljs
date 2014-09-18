@@ -93,6 +93,10 @@
 
   (close! [this] (.close this) this)
 
+  (reconnect! [this])
+
+  (connected? [this])
+
   (listen [this handler]
     (on-data this handler))
 
@@ -113,6 +117,10 @@
   (close! [this] 
     (.end this) 
     this)
+
+  (reconnect! [this])
+
+  (connected? [this])
 
   (listen [this handler]
     (on-data this handler))
